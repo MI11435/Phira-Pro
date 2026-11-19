@@ -185,10 +185,12 @@ item-debug-line-sub = 各判定線の ID / 高さ / z-index を表示し、消�
 item-debug-note = ノーツデバッグ
 item-debug-note-sub = ノーツの線番号 / 時刻 / 高さ / 種類と横判定範囲を表示します
 item-legacy-hold = 従来の Hold 表示
-item-legacy-hold-sub = リソースパックとの互換性のため、公式形式の譜面では Hold の長さを従来の方式で計算します。
+item-legacy-hold-sub =
+    リソースパックとの互換性のため、公式形式の譜面では Hold の長さを従来の方式で計算します。
     譜面を開き直すと反映されます。
 item-rpen-software = RPEN のソフトウェア描画
-item-rpen-software-sub = エディターの画面が真っ黒でもボタンが反応するときに有効にしてください。
+item-rpen-software-sub =
+    エディターの画面が真っ黒でもボタンが反応するときに有効にしてください。
     エディターを開き直すと反映されます。一部のプレビューエフェクトが制限される場合があります。
 item-font = カスタムフォント
 item-font-sub = ttf/otf を UI フォントとして読み込みます。*再起動後に有効*
@@ -231,20 +233,25 @@ backup-created = バックアップ完了：{ $count } ファイル
 backup-restored = 復元完了：{ $count } ファイル。Phira Pro を再起動してください。
 transfer-working = 処理中…
 item-api-url = API アドレス
-item-api-url-sub = カスタム API のベース URL（ログイン / 譜面 / スコア）。空欄で公式サーバーを使用。
+item-api-url-sub =
+    カスタム API のベース URL（ログイン / 譜面 / スコア）。空欄で公式サーバーを使用。
     http(s):// で始まる必要があり、変更後は再起動が必要です。
 item-status-url = サーバーステータスページ
-item-web-url-sub = Web フロントエンドのベース URL（譜面 / ユーザー / コレクションページ、規約リンク）。
+item-web-url-sub =
+    Web フロントエンドのベース URL（譜面 / ユーザー / コレクションページ、規約リンク）。
     空欄で公式サイトを使用。http(s):// で始まる必要があります。
 item-url-invalid = 無効なアドレス（http:// または https:// で始まる必要があります）
-item-status-url-sub = 設定の「サーバーステータス」ボタンで開く URL。空欄で公式ページを使用。
+item-status-url-sub =
+    設定の「サーバーステータス」ボタンで開く URL。空欄で公式ページを使用。
     http(s):// で始まる必要があります。
 item-web-url = Web アドレス
 item-flow-speed = ノート流速
-item-flow-speed-sub = ノートの流れる速さだけを変え、音楽と音程は変わりません。
+item-flow-speed-sub =
+    ノートの流れる速さだけを変え、音楽と音程は変わりません。
     この設定ではスコアをアップロードできません。
 item-fade-strength = 上隠し/下隠しの強さ
-item-fade-strength-sub = 遮蔽の高さは画面の 10～90% です。
+item-fade-strength-sub =
+    遮蔽の高さは画面の 10～90% です。
     色や画像の切り抜きは「ユーザー設定」で変更できます。
 aspect-official = 公式
 item-custom-aspect = プレイ画面比率をカスタム
