@@ -185,8 +185,7 @@ item-debug-line-sub = 各判定線の ID / 高さ / z-index を表示し、消�
 item-debug-note = ノーツデバッグ
 item-debug-note-sub = ノーツの線番号 / 時刻 / 高さ / 種類と横判定範囲を表示します
 item-legacy-hold = 従来の Hold 表示
-item-legacy-hold-sub = リソースパックとの互換性のため、公式形式の譜面では Hold の長さを従来の方式で計算します。
-    譜面を開き直すと反映されます。
+item-legacy-hold-sub = リソースパックとの互換性のため、公式形式の譜面では Hold の長さを従来の方式で計算します。\n譜面を開き直すと反映されます。
 item-rpen-software = RPEN のソフトウェア描画
 item-rpen-software-sub = エディターの画面が真っ黒でもボタンが反応するときに有効にしてください。
     エディターを開き直すと反映されます。一部のプレビューエフェクトが制限される場合があります。
