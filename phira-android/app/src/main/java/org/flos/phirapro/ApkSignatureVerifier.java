@@ -10,7 +10,8 @@ import java.security.MessageDigest;
 
 final class ApkSignatureVerifier {
     private static final String OFFICIAL_CERT_SHA256 =
-            "3a513ba2bf0f73e642043fcabfc5529d60718f66ae60fd31f8b4d37d72d65bd2";
+            "a18c58263dac92ac3956e93bb068df61b3bbeceb6110f0e3fd27cbe658b6cb4c";//Mint用
+            //"3a513ba2bf0f73e642043fcabfc5529d60718f66ae60fd31f8b4d37d72d65bd2";
 
     private ApkSignatureVerifier() {}
 
