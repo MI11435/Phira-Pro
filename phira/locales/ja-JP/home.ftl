@@ -1,6 +1,7 @@
 play = プレイ
 event = イベント
-respack = リソース
+respack =
+    リソース
     パック
 not-opened = 現在は利用できません
 not-logged-in = ログインしてください
