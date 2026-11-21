@@ -14,9 +14,9 @@ public final class PhiraApplication extends Application {
             } finally {
                 Runtime.getRuntime().halt(1);
             }
-        }*/
-    }
-
+        }
+    }*/
+    // パソコン持ってないので検証用として消してます。by Mint
     @Override public void onCreate() {
         super.onCreate();
         CrashLogRecorder.start(this);
