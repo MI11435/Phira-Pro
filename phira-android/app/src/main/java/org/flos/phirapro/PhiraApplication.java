@@ -6,7 +6,7 @@ import android.os.Process;
 import android.util.Log;
 
 public final class PhiraApplication extends Application {
-    @Override protected void attachBaseContext(Context base) {
+    /*@Override protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         if (!ApkSignatureVerifier.isOfficial(base)) {
             try {
@@ -14,7 +14,7 @@ public final class PhiraApplication extends Application {
             } finally {
                 Runtime.getRuntime().halt(1);
             }
-        }
+        }*/
     }
 
     @Override public void onCreate() {
