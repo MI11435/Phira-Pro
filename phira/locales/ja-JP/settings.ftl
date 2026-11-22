@@ -333,7 +333,7 @@ font-medium = 100%
 font-larger = 110%
 font-largest = 120%
 theoretical-score = 理論値スコア
-theoretical-score-sub = 
+theoretical-score-sub =
     プレイ中とリザルト画面で Perfect+ 1回につき1点を加算して表示します。
     保存・送信されるスコアは変わりません。
 uniform-loudness = Match music loudness
