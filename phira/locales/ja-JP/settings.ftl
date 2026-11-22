@@ -78,7 +78,9 @@ item-dc-pause = ダブルクリックでポーズ
 item-dhint = 多点タップサポート
 item-dhint-sub = 同時ノーツが強調表示されます
 item-opt = 最適化を優先
-item-opt-sub = 不要な描画をさらに省略してフレームレートを上げます。一部の譜面で表示異常が出る場合があるため、問題があればオフにしてください。
+item-opt-sub =
+    不要な描画をさらに省略してフレームレートを上げます。
+    一部の譜面で表示異常が出る場合があるため、問題があればオフにしてください。
 item-use-keyboard = キーボードを使用
 item-use-keyboard-sub = キーボード入力でプレイできます。有効にするとスコアはアップロードされません。
 item-prefer-reduced-motion = アニメーションを減らす
@@ -187,9 +189,13 @@ item-debug-line-sub = 各判定線の ID / 高さ / z-index を表示し、消�
 item-debug-note = ノーツデバッグ
 item-debug-note-sub = ノーツの線番号 / 時刻 / 高さ / 種類と横判定範囲を表示します
 item-legacy-hold = 従来の Hold 表示
-item-legacy-hold-sub = リソースパックとの互換性のため、公式形式の譜面では Hold の長さを従来の方式で計算します。譜面を開き直すと反映されます。
+item-legacy-hold-sub =
+    リソースパックとの互換性のため、公式形式の譜面では Hold の長さを従来の方式で計算します。
+    譜面を開き直すと反映されます。
 item-rpen-software = RPEN のソフトウェア描画
-item-rpen-software-sub = エディターの画面が真っ黒でもボタンが反応するときに有効にしてください。エディターを開き直すと反映されます。一部のプレビューエフェクトが制限される場合があります。
+item-rpen-software-sub =
+    エディターの画面が真っ黒でもボタンが反応するときに有効にしてください。
+    エディターを開き直すと反映されます。一部のプレビューエフェクトが制限される場合があります。
 item-font = カスタムフォント
 item-font-sub = ttf/otf を UI フォントとして読み込みます。*再起動後に有効*
 import-font = 読み込み
@@ -231,16 +237,26 @@ backup-created = バックアップ完了：{ $count } ファイル
 backup-restored = 復元完了：{ $count } ファイル。Phira Pro を再起動してください。
 transfer-working = 処理中…
 item-api-url = API アドレス
-item-api-url-sub = カスタム API のベース URL（ログイン / 譜面 / スコア）。空欄で公式サーバーを使用。http(s):// で始まる必要があり、変更後は再起動が必要です。
+item-api-url-sub =
+    カスタム API のベース URL（ログイン / 譜面 / スコア）。空欄で公式サーバーを使用。
+    http(s):// で始まる必要があり、変更後は再起動が必要です。
 item-status-url = サーバーステータスページ
-item-web-url-sub = Web フロントエンドのベース URL（譜面 / ユーザー / コレクションページ、規約リンク）。空欄で公式サイトを使用。http(s):// で始まる必要があります。
+item-web-url-sub =
+    Web フロントエンドのベース URL（譜面 / ユーザー / コレクションページ、規約リンク）。
+    空欄で公式サイトを使用。http(s):// で始まる必要があります。
 item-url-invalid = 無効なアドレス（http:// または https:// で始まる必要があります）
-item-status-url-sub = 設定の「サーバーステータス」ボタンで開く URL。空欄で公式ページを使用。http(s):// で始まる必要があります。
+item-status-url-sub =
+    設定の「サーバーステータス」ボタンで開く URL。空欄で公式ページを使用。
+    http(s):// で始まる必要があります。
 item-web-url = Web アドレス
 item-flow-speed = ノート流速
-item-flow-speed-sub = ノートの流れる速さだけを変え、音楽と音程は変わりません。この設定ではスコアをアップロードできません。
+item-flow-speed-sub =
+    ノートの流れる速さだけを変え、音楽と音程は変わりません。
+    この設定ではスコアをアップロードできません。
 item-fade-strength = 上隠し/下隠しの強さ
-item-fade-strength-sub = 遮蔽の高さは画面の 10～90% です。色や画像の切り抜きは「ユーザー設定」で変更できます。
+item-fade-strength-sub =
+    遮蔽の高さは画面の 10～90% です。
+    色や画像の切り抜きは「ユーザー設定」で変更できます。
 aspect-official = 公式
 item-custom-aspect = プレイ画面比率をカスタム
 item-custom-aspect-sub = 譜面に記録された比率を上書きします
@@ -301,9 +317,14 @@ chart-import-label = 譜面を一括インポート
 chart-import-desc = 公式クライアントの一括エクスポートで作った zip をインポートします（単体の譜面パックでも可）。インポートした譜面はすぐにローカル譜面庫に表示されます
 chart-import-btn = ファイルを選んでインポート
 item-block-simple = 噪域の軽量描画
-item-block-simple-sub = 判定線のノイズ表現を簡略化して GPU 負荷を下げます。フレームレートの向上は譜面によります。判定ルールは変わりません。
+item-block-simple-sub =
+    判定線のノイズ表現を簡略化して GPU 負荷を下げます。フレームレートの向上は譜面によります。
+    判定ルールは変わりません。
 item-line-elision = 透明な判定線の省略
-item-line-elision-sub = 完全に透明な判定線を描画せず、描画負荷を減らします。透明な判定線が多い譜面ほど効果があり、通常の譜面ではフレームレートの向上は限定的です。見た目は変わりません。
+item-line-elision-sub =
+    完全に透明な判定線を描画せず、描画負荷を減らします。
+    透明な判定線が多い譜面ほど効果があり、通常の譜面ではフレームレートの向上は限定的です。
+    見た目は変わりません。
 experience = ユーザー設定
 font-display-size = フォントサイズ
 font-smallest = 80%
@@ -312,9 +333,13 @@ font-medium = 100%
 font-larger = 110%
 font-largest = 120%
 theoretical-score = 理論値スコア
-theoretical-score-sub = プレイ中とリザルト画面で Perfect+ 1回につき1点を加算して表示します。保存・送信されるスコアは変わりません。
+theoretical-score-sub = 
+    プレイ中とリザルト画面で Perfect+ 1回につき1点を加算して表示します。
+    保存・送信されるスコアは変わりません。
 uniform-loudness = Match music loudness
-uniform-loudness-sub = ピークに余裕を持たせながら、メニュー、試聴、プレイ中の楽曲の音量差を抑えます。効果音の音量は変わりません。
+uniform-loudness-sub =
+    ピークに余裕を持たせながら、メニュー、試聴、プレイ中の楽曲の音量差を抑えます。
+    効果音の音量は変わりません。
 uniform-level = 音楽の音量を統一
 fixed-background = 背景の明暗を固定する
 background-dim = 背景の暗さ（0.00～1.00）
@@ -330,7 +355,9 @@ cover-crop-help = ドラッグで位置を調整し、拡大・縮小で切り�
 cover-cancel = キャンセル
 cover-apply = 保存
 item-shader-pre-render = シェーダーの事前準備
-item-shader-pre-render-sub = 読み込み時にシェーダーをコンパイルし、静的ノイズをキャッシュしてゲーム中のシェーダー詰まりを減らします。読み込みは遅くなり、フレームレートの向上は譜面によります。
+item-shader-pre-render-sub =
+    読み込み時にシェーダーをコンパイルし、静的ノイズをキャッシュしてゲーム中のシェーダー詰まりを減らします。
+    読み込みは遅くなり、フレームレートの向上は譜面によります。
 judgement-presets = 判定プリセット
 preset-phigros = Phigros の判定
 preset-pro = Phira Pro 判定
@@ -436,7 +463,9 @@ practice-debug-input = タッチ表示
 item-show-judgement-details = 判定詳細表示
 item-show-judgement-details-sub = スコアと判定精度の下に、判定ごとの回数をリアルタイムで表示します。
 item-show-perfect-combo = Perfect Combo表示
-item-show-perfect-combo-sub = Perfect+ と Perfect のみでコンボを数えます。それ以外の判定で表示上のコンボが途切れますが、スコアには影響しません。
+item-show-perfect-combo-sub =
+    Perfect+ と Perfect のみでコンボを数えます。
+    それ以外の判定で表示上のコンボが途切れますが、スコアには影響しません。
 item-gameplay-background-blur = ゲームプレイ中の背景をぼやかす
 item-fps-unlimited = 無制限
 item-timing-offset = 判定タイミングの数値表示
@@ -447,9 +476,17 @@ item-early-late-position = 表示位置
 item-early-late-indicator = 判定タイミングバーの下
 item-early-late-bottom = プレイ画面の下端
 item-font-atlas-pool = フォントアトラスの切り替え
-item-font-atlas-pool-sub = HUD テキスト更新時の引っかかりと長いフレームを減らします。平均フレームレートの向上は端末と HUD 更新頻度によりますが、低スペック端末ではカクつきの改善が分かりやすいです。見た目とレイアウトは変わりません。既定でオン。
+item-font-atlas-pool-sub =
+    HUD テキスト更新時の引っかかりと長いフレームを減らします。
+    平均フレームレートの向上は端末と HUD 更新頻度によりますが、
+    低スペック端末ではカクつきの改善が分かりやすいです。見た目とレイアウトは変わりません。
+    既定でオン。
 item-effect-render-optimized = エフェクト描画の最適化
-item-effect-render-optimized-sub = シェーダーと全画面合成の負荷を減らします。エフェクトが多い譜面ほど効果があり、通常の譜面では向上が限定的です。オフにすると元のシェーダーに戻ります。シェーダー/マテリアルの変更は譜面の再読み込み後に反映されます。
+item-effect-render-optimized-sub =
+    シェーダーと全画面合成の負荷を減らします。
+    エフェクトが多い譜面ほど効果があり、通常の譜面では向上が限定的です。
+    オフにすると元のシェーダーに戻ります。
+    シェーダー/マテリアルの変更は譜面の再読み込み後に反映されます。
 
 performance = パフォーマンス
 performance-quality = 画質
@@ -462,7 +499,9 @@ performance-preset-low = 低負荷
 performance-preset-standard = 標準
 performance-preset-high = 高画質
 item-particle = ヒットパーティクル
-item-particle-sub = ヒット時にパーティクルを表示します。オフにするとフレームレートが大きく上がる場合があり、低スペック端末ではオフ推奨です。
+item-particle-sub =
+    ヒット時にパーティクルを表示します。
+    オフにするとフレームレートが大きく上がる場合があり、低スペック端末ではオフ推奨です。
 item-noise-glow = ノイズグロー
 item-noise-glow-sub = 判定線のノイズグロー。オフにするとフレームレートが上がり、低スペック端末ほど効果的です。
 item-noise-refraction = ノイズ屈折
@@ -472,7 +511,9 @@ item-sample-count-sub = 1× / 2× / 4×。高いほど滑らかになります�
 item-fxaa = FXAA
 
 item-aa = アンチエイリアス
-item-aa-sub = 輪郭を滑らかにしますが、特に性能への影響が大きい項目です。低スペック端末ではオフ、または FXAA のみを推奨します。
+item-aa-sub =
+    輪郭を滑らかにしますが、特に性能への影響が大きい項目です。
+    低スペック端末ではオフ、または FXAA のみを推奨します。
 item-aa-off = オフ
 item-aa-fxaa = FXAA
 item-aa-msaa2 = MSAA 2×
