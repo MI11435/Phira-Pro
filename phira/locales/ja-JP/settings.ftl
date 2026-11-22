@@ -356,7 +356,8 @@ cover-cancel = キャンセル
 cover-apply = 保存
 item-shader-pre-render = シェーダーの事前準備
 item-shader-pre-render-sub =
-    読み込み時にシェーダーをコンパイルし、静的ノイズをキャッシュしてゲーム中のシェーダー詰まりを減らします。
+    読み込み時にシェーダーをコンパイルし、
+    静的ノイズをキャッシュしてゲーム中のシェーダー詰まりを減らします。
     読み込みは遅くなり、フレームレートの向上は譜面によります。
 judgement-presets = 判定プリセット
 preset-phigros = Phigros の判定
