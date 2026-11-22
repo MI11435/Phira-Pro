@@ -118,52 +118,52 @@ item-refresh-rate-sub = 希望する画面のリフレッシュレートを選�
 item-refresh-rate-max = 最大：{ $rate } Hz
 about-content =
     Phira Pro v{ $version }
-      Phira v{ $version }
-    
-      PhiraはPhigrosにインスパイアされた非商業のコミュニティ主導のリズムゲームです。
-    
-      本プロジェクトは非公式のプレイヤーによるプロジェクトであり、南京鸽游网络有限公司（Pigeon Games）および『Phigros』公式とは、許諾・協力・運営のいずれの関係も一切存在しません。
-    
+    Phira v{ $version }
+
+    PhiraはPhigrosにインスパイアされた非商業のコミュニティ主導のリズムゲームです。
+
+    本プロジェクトは非公式のプレイヤーによるプロジェクトであり、南京鸽游网络有限公司（Pigeon Games）および『Phigros』公式とは、許諾・協力・運営のいずれの関係も一切存在しません。
+
     Phira Pro は公式 Phira を基にした非営利の非公式派生版です。
-    
+
     BiliBiliアカウント: @Phira官方
     QQ Guild: r48eajexth
     Discord Server: discord.gg/gqpR3bTSsP
-      BiliBiliアカウント: @Phira官方
-      QQ Guild: r48eajexth
-      Discord Server: discord.gg/gqpR3bTSsP
-    
-      最新情報を入手し、サポートを受けるためにQQ GuildまたはDiscordサーバーへの参加をお勧めします。
-    
-      スタッフリスト（辞書順）
-      開発
-      { $development }
-    
-      運営
-      { $operations }
-    
-      ドキュメント
-      { $documentation }
-    
-      アート
-      { $art }
-    
-      音楽
-      { $music }
-    
-      オーディオ
-      { $audio }
-    
-      コミュニティ管理
-      { $community }
-    
-      ローカライズ
-      { $localization }
-    
+    BiliBiliアカウント: @Phira官方
+    QQ Guild: r48eajexth
+    Discord Server: discord.gg/gqpR3bTSsP
+
+    最新情報を入手し、サポートを受けるためにQQ GuildまたはDiscordサーバーへの参加をお勧めします。
+
+    スタッフリスト（辞書順）
+    開発
+    { $development }
+
+    運営
+    { $operations }
+
+    ドキュメント
+    { $documentation }
+
+    アート
+    { $art }
+
+    音楽
+    { $music }
+
+    オーディオ
+    { $audio }
+
+    コミュニティ管理
+    { $community }
+
+    ローカライズ
+    { $localization }
+
     Phira Pro 派生版
     メンテナンス
     { $revision }
-    
+
     その他多くのボランティア譜面レビュアーの皆様に感謝します。完全なリストは https://phira.moe/staff をご覧ください。
 item-drag-protect = 黄ノーツ保護
 item-drag-protect-sub = 青ノーツ / Hold が early 側で、黄ノーツが現在時刻に 10ms 以上近い場合、黄ノーツごとに一度だけタップを受け取ります
