@@ -1,7 +1,7 @@
 use super::*;
 use crate::{dir, get_data};
 use anyhow::{Context, Result};
-use prpr::scene::{request_file, request_input, return_file, return_input, show_error, show_message, take_file, take_input};
+use prpr::scene::{request_file, request_input, return_file, return_input, show_error, show_message, take_file, take_input, NextScene};
 use std::{borrow::Cow, time::Instant};
 
 impl RenderPage {
@@ -17,12 +17,24 @@ impl RenderPage {
             .with_control_text_size(0.34)
             .with_options(resource_packs.iter().map(|choice| choice.label.clone()).collect())
             .with_selected(index);
+        let resolution_selector = crate::popup::ChooseButton::new()
+            .with_compact_popup()
+            .with_control_text_size(0.34)
+            .with_popup_height(0.50)
+            .with_options(
+                std::iter::once("自定义…".into())
+                    .chain(RESOLUTION_PRESETS.iter().map(|[width, height]| format!("{width} × {height}")))
+                    .collect(),
+            )
+            .with_selected(prefs.resolution_choice());
         Self {
             prefs,
             resource_packs,
+            resolution_selector,
             resource_pack_selector,
             selected: None,
-            replay_file: None,
+            replay: None,
+            pick_replay_request: false,
             pick_request: false,
             category: settings::Category::Output,
             scroll: Scroll::new(),
@@ -44,6 +56,10 @@ impl RenderPage {
     pub(super) fn busy(&self) -> bool {
         matches!(self.job, Job::Loading(_) | Job::Rendering { .. })
     }
+
+    pub(super) fn has_ppr_replay(&self) -> bool {
+        self.replay.as_ref().and_then(|replay| replay.path.extension()).is_some_and(|ext| ext == "ppr")
+    }
     fn out_dir(&self) -> PathBuf {
         if self.prefs.out_dir.is_empty() {
             data_root().join("render")
@@ -56,14 +72,16 @@ impl RenderPage {
     }
     fn output_path(&self) -> Option<PathBuf> {
         let selected = self.selected.as_ref()?;
-        let suffix = if self.replay_file.is_some() { "-replay" } else { "" };
+        let suffix = if self.replay.is_some() { "-replay" } else { "" };
         Some(
             self.out_dir()
                 .join(format!("{} [{:.1}]{suffix}.mp4", sanitize(&selected.name), selected.difficulty)),
         )
     }
     fn options(&self) -> Result<VideoOptions> {
-        let (width, height) = RESOLUTIONS[self.prefs.res];
+        let [width, height] = self.prefs.dimensions();
+        let pass_rate_path = self.selected.as_ref().filter(|_| self.has_ppr_replay() && self.prefs.visuals.show_pass_rate)
+            .map(|item| crate::pass_rate::path(&item.local_path)).transpose()?;
         Ok(VideoOptions {
             width,
             height,
@@ -73,6 +91,7 @@ impl RenderPage {
             sample_count: get_data().config.sample_count.max(1),
             res_pack_path: self.prefs.resource_pack.resolve(get_data(), &PathBuf::from(dir::respacks()?))?,
             visuals: self.prefs.visuals.clone(),
+            pass_rate_path,
             presentation: self.prefs.presentation.clone(),
             ..Default::default()
         })
@@ -105,7 +124,7 @@ impl RenderPage {
         let out = self.output_path().context("无法生成视频文件名")?;
         let options = self.options()?;
         options.validate()?;
-        self.job = Job::Loading(if let Some(path) = self.replay_file.clone() {
+        self.job = Job::Loading(if let Some(path) = self.replay.as_ref().map(|replay| replay.path.clone()) {
             let chart_id = self.selected.as_ref().and_then(|selected| selected.chart_id);
             Box::pin(async move {
                 let replay = crate::scene::replay::VideoReplay::load(path, &chart, chart_id).await?;
@@ -118,13 +137,16 @@ impl RenderPage {
     }
 
     fn activate_field(&mut self, field: settings::Field) -> Result<()> {
+        if field == settings::Field::PassRate && !self.has_ppr_replay() {
+            return Ok(());
+        }
         use settings::Kind;
         let (_, kind, _, _) = field.info();
         match kind {
-            Kind::Text | Kind::Number => request_input(
-                format!("video-field-{}", field as usize),
-                inputbox::InputBox::new().default_text(settings::input_value(&self.prefs, field)),
-            ),
+            Kind::Text | Kind::Number => {
+                let input = inputbox::InputBox::new().default_text(settings::input_value(&self.prefs, field));
+                request_input(format!("video-field-{}", field as usize), input);
+            }
             Kind::Folder => {
                 #[cfg(not(any(target_os = "android", target_os = "ios", target_env = "ohos")))]
                 if let Some(path) = rfd::FileDialog::new().set_title("选择视频输出目录").pick_folder() {
@@ -182,6 +204,21 @@ impl RenderPage {
 }
 
 impl Page for RenderPage {
+    fn next_scene(&mut self, _: &mut SharedState) -> NextScene {
+        if std::mem::take(&mut self.pick_replay_request) {
+            NextScene::Overlay(Box::new(ReplayManager::render_picker()))
+        } else {
+            NextScene::None
+        }
+    }
+
+    fn on_result(&mut self, result: Box<dyn std::any::Any>, _: &mut SharedState) -> Result<()> {
+        if let Ok(replay) = result.downcast::<RenderReplay>() {
+            self.replay = Some(*replay);
+        }
+        Ok(())
+    }
+
     fn enter(&mut self, _s: &mut SharedState) -> Result<()> {
         if !self.busy() {
             self.resource_packs = resource_pack::choices(get_data(), &PathBuf::from(dir::respacks()?), &self.prefs.resource_pack);
@@ -225,6 +262,25 @@ impl Page for RenderPage {
     fn update(&mut self, s: &mut SharedState) -> Result<()> {
         self.scroll.update(s.t);
         self.status_scroll.update(s.t);
+        self.resolution_selector.update(s.t);
+        if self.resolution_selector.changed() && !self.busy() {
+            match self.resolution_selector.selected() {
+                0 => {
+                    self.resolution_selector.set_selected(self.prefs.resolution_choice());
+                    request_input(
+                        format!("video-field-{}", settings::Field::Resolution as usize),
+                        inputbox::InputBox::new()
+                            .title("自定义分辨率")
+                            .prompt("按宽×高输入像素尺寸")
+                            .default_text(self.prefs.resolution_text()),
+                    );
+                }
+                index => {
+                    self.prefs.resolution = Some(RESOLUTION_PRESETS[index - 1]);
+                    self.changed();
+                }
+            }
+        }
         self.resource_pack_selector.update(s.t);
         if self.resource_pack_selector.changed() && !self.busy() {
             if let Some(choice) = self.resource_packs.get(self.resource_pack_selector.selected()) {
@@ -243,7 +299,12 @@ impl Page for RenderPage {
             {
                 if !self.busy() {
                     match settings::change(&mut self.prefs, field, Some(&text)) {
-                        Ok(()) => self.changed(),
+                        Ok(()) => {
+                            if field == settings::Field::Resolution {
+                                self.resolution_selector.set_selected(self.prefs.resolution_choice());
+                            }
+                            self.changed();
+                        }
                         Err(err) => {
                             show_message(format!("设置未保存：{err}"));
                         }
@@ -254,11 +315,7 @@ impl Page for RenderPage {
             }
         }
         if let Some((id, path)) = take_file() {
-            if id == "render-replay" {
-                if !path.is_empty() && !self.busy() {
-                    self.replay_file = Some(path.into());
-                }
-            } else if id == "render-avatar" {
+            if id == "render-avatar" {
                 if !path.is_empty() && !self.busy() {
                     self.prefs.presentation.result.avatar = Some(path.into());
                     self.changed();
@@ -288,7 +345,7 @@ impl Page for RenderPage {
 
     fn touch(&mut self, touch: &Touch, s: &mut SharedState) -> Result<bool> {
         let t = s.t;
-        if self.resource_pack_selector.top_touch(touch, t) {
+        if self.resolution_selector.top_touch(touch, t) || self.resource_pack_selector.top_touch(touch, t) {
             return Ok(true);
         }
         if self.scroll.touch(touch, t) || self.status_scroll.touch(touch, t) {
@@ -318,11 +375,11 @@ impl Page for RenderPage {
             return Ok(true);
         }
         if !self.busy() && self.clear_replay.touch(touch, t) {
-            self.replay_file = None;
+            self.replay = None;
             return Ok(true);
         }
         if !self.busy() && self.pick_replay.touch(touch, t) {
-            request_file("render-replay");
+            self.pick_replay_request = true;
             return Ok(true);
         }
         if self.open.touch(touch, t) {
@@ -337,7 +394,9 @@ impl Page for RenderPage {
             return Ok(true);
         }
         if self.scroll.contains(touch) && !self.busy() {
-            if self.category == settings::Category::Output && self.resource_pack_selector.touch(touch, t) {
+            if self.category == settings::Category::Output
+                && (self.resolution_selector.touch(touch, t) || self.resource_pack_selector.touch(touch, t))
+            {
                 return Ok(true);
             }
             #[cfg(target_os = "windows")]
@@ -372,6 +431,7 @@ impl Page for RenderPage {
 
     fn render_top(&mut self, ui: &mut prpr::ui::Ui, s: &mut SharedState) -> Result<()> {
         self.resource_pack_selector.render_top(ui, s.t, 1.);
+        self.resolution_selector.render_top(ui, s.t, 1.);
         Ok(())
     }
 }

@@ -94,6 +94,18 @@ impl ChartVideoRenderer {
                 .with_context(|| format!("渲染扩展 {} 配置失败", extension.id()))?;
         }
         options.validate()?;
+        let (mut texture_limit, mut viewport_limit) = (0, [0i32; 2]);
+        unsafe {
+            use miniquad::gl::*;
+            const GL_MAX_VIEWPORT_DIMS: u32 = 0x0D3A;
+            glGetIntegerv(GL_MAX_TEXTURE_SIZE, &mut texture_limit);
+            glGetIntegerv(GL_MAX_VIEWPORT_DIMS, viewport_limit.as_mut_ptr());
+        }
+        anyhow::ensure!(
+            options.width as i32 <= texture_limit.min(viewport_limit[0])
+                && options.height as i32 <= texture_limit.min(viewport_limit[1]),
+            "分辨率超出当前设备的渲染上限"
+        );
         let mut fs = fs_from_file(&source).context("无法打开谱面")?;
         let mut info = load_info(fs.as_mut()).await.context("无法读取谱面信息")?;
         let mut config = config.unwrap_or_default();
@@ -138,13 +150,19 @@ impl ChartVideoRenderer {
         config.adjust_time = false;
         config.interactive = false;
         config.res_pack_path = options.res_pack_path.clone();
+        config.show_pass_rate = replay.is_some() && options.visuals.show_pass_rate;
+        config.pass_rate_path = if config.show_pass_rate { options.pass_rate_path.clone() } else { None };
         options.visuals.apply(&mut config, options.show_hud);
+        let replay_life_bar = replay.is_some() && config.hp_mode;
+        if replay_life_bar {
+            config.hp_color = options.visuals.life_color;
+        }
         let mut scene = GameScene::new(GameMode::View, info.clone(), config, fs, None, background.clone(), illustration.clone(), None, None, None)
             .await
             .context("无法加载谱面场景")?;
         scene.hide_ui = !options.show_hud;
         scene.video_indicators = Some(options.visuals.show_early_late);
-        scene.video_life_bar = options.visuals.show_life_bar;
+        scene.video_life_bar = replay_life_bar;
         if let Some(replay) = &replay {
             replay.validate(&scene)?;
         }
